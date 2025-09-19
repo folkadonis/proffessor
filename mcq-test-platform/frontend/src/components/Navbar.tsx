@@ -166,7 +166,7 @@ const Navbar: React.FC = () => {
             right: 0,
             bottom: 0,
             background: 'rgba(0, 0, 0, 0.5)',
-            zIndex: 998,
+            zIndex: 9998,
           }}
         />
       )}

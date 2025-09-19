@@ -285,15 +285,32 @@
     flex-direction: column !important;
     gap: 0.5rem !important;
     width: 100% !important;
+    padding: 1rem 0 !important;
   }
 
   .navbar-link {
     width: 100% !important;
     text-align: center !important;
-    padding: 0.875rem !important;
+    padding: 1rem !important;
     display: block !important;
-    background: linear-gradient(135deg, rgba(249, 250, 251, 0.8) 0%, rgba(243, 244, 246, 0.8) 100%) !important;
-    margin-bottom: 0.5rem !important;
+    background: linear-gradient(135deg, rgba(249, 250, 251, 0.9) 0%, rgba(243, 244, 246, 0.9) 100%) !important;
+    margin-bottom: 0.75rem !important;
+    color: var(--text-primary) !important;
+    text-decoration: none !important;
+    border-radius: var(--radius-lg) !important;
+    font-weight: 500 !important;
+    border: 1px solid var(--light-400) !important;
+  }
+
+  .navbar-link:hover {
+    background: var(--primary-gradient) !important;
+    color: white !important;
+    transform: translateY(-2px) !important;
+  }
+
+  .navbar-link.active {
+    background: var(--primary-gradient) !important;
+    color: white !important;
   }
 
   .navbar-user {
