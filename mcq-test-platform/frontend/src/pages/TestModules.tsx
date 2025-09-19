@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import api from '../services/api';
+import './TestModulesPremium.css';
 
 interface TestModule {
   _id: string;

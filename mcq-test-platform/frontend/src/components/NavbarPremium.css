@@ -230,18 +230,19 @@
 
   .navbar-menu {
     position: fixed;
-    top: 70px;
+    top: 0;
     right: -100%;
-    width: 320px;
-    height: calc(100vh - 70px);
+    width: 100%;
+    max-width: 320px;
+    height: 100vh;
     background: white;
     flex-direction: column;
-    padding: 2rem 1rem;
+    padding: 5rem 1.5rem 2rem;
     gap: 2rem;
     align-items: stretch;
     transition: right 0.3s ease-in-out;
-    z-index: 999;
-    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.1);
+    z-index: 1001;
+    box-shadow: -5px 0 30px rgba(0, 0, 0, 0.2);
     overflow-y: auto;
   }
 
@@ -266,6 +267,8 @@
     align-items: center;
     padding: 1.5rem 1rem;
     background: linear-gradient(135deg, rgba(139, 92, 246, 0.05) 0%, rgba(236, 72, 153, 0.05) 100%);
+    border-radius: var(--radius-lg);
+    margin-top: auto;
   }
 
   .user-info {
@@ -285,9 +288,15 @@
     font-size: 1.25rem;
   }
 
+  .navbar-brand::before {
+    font-size: 1.5rem;
+  }
+
   .navbar-menu {
     width: 100%;
+    max-width: 100%;
     right: -100%;
+    padding: 4rem 1rem 2rem;
   }
 
   .navbar-container {
