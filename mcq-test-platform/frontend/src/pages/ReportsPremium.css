@@ -70,7 +70,7 @@
   background: white;
   border-radius: var(--radius-xl);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
+  overflow-x: auto;
   animation: fadeInUp 0.8s ease;
   position: relative;
 }
@@ -90,6 +90,7 @@
   width: 100%;
   border-collapse: collapse;
   table-layout: fixed;
+  min-width: 1000px;
 }
 
 .reports-table thead {
@@ -102,8 +103,8 @@
 }
 
 .reports-table thead th {
-  padding: 1.25rem 1.5rem;
-  text-align: left;
+  padding: 1.25rem 1rem;
+  text-align: center;
   font-size: 0.875rem;
   font-weight: 700;
   text-transform: uppercase;
@@ -111,23 +112,30 @@
   position: relative;
 }
 
+.reports-table.admin-table thead th:nth-child(1),
+.reports-table.admin-table thead th:nth-child(2),
+.reports-table.admin-table thead th:nth-child(3),
+.reports-table.user-table thead th:nth-child(1) {
+  text-align: left;
+}
+
 /* Set column widths for admin view */
-.reports-table.admin-table thead th:nth-child(1) { width: 12%; }  /* User Name */
-.reports-table.admin-table thead th:nth-child(2) { width: 20%; }  /* Email */
-.reports-table.admin-table thead th:nth-child(3) { width: 18%; }  /* Test */
-.reports-table.admin-table thead th:nth-child(4) { width: 10%; }  /* Score */
-.reports-table.admin-table thead th:nth-child(5) { width: 12%; }  /* Percentage */
-.reports-table.admin-table thead th:nth-child(6) { width: 10%; }  /* Status */
-.reports-table.admin-table thead th:nth-child(7) { width: 10%; }  /* Time */
-.reports-table.admin-table thead th:nth-child(8) { width: 8%; }   /* Date */
+.reports-table.admin-table thead th:nth-child(1) { width: 15%; min-width: 120px; }  /* User Name */
+.reports-table.admin-table thead th:nth-child(2) { width: 22%; min-width: 180px; }  /* Email */
+.reports-table.admin-table thead th:nth-child(3) { width: 15%; min-width: 120px; }  /* Test */
+.reports-table.admin-table thead th:nth-child(4) { width: 10%; min-width: 80px; }  /* Score */
+.reports-table.admin-table thead th:nth-child(5) { width: 12%; min-width: 100px; }  /* Percentage */
+.reports-table.admin-table thead th:nth-child(6) { width: 10%; min-width: 80px; }  /* Status */
+.reports-table.admin-table thead th:nth-child(7) { width: 8%; min-width: 70px; }  /* Time */
+.reports-table.admin-table thead th:nth-child(8) { width: 8%; min-width: 100px; }   /* Date */
 
 /* Set column widths for user view */
-.reports-table.user-table thead th:nth-child(1) { width: 25%; }  /* Test */
-.reports-table.user-table thead th:nth-child(2) { width: 12%; }  /* Score */
-.reports-table.user-table thead th:nth-child(3) { width: 15%; }  /* Percentage */
-.reports-table.user-table thead th:nth-child(4) { width: 15%; }  /* Status */
-.reports-table.user-table thead th:nth-child(5) { width: 15%; }  /* Time */
-.reports-table.user-table thead th:nth-child(6) { width: 18%; }  /* Date */
+.reports-table.user-table thead th:nth-child(1) { width: 25%; min-width: 150px; }  /* Test */
+.reports-table.user-table thead th:nth-child(2) { width: 12%; min-width: 80px; }  /* Score */
+.reports-table.user-table thead th:nth-child(3) { width: 15%; min-width: 100px; }  /* Percentage */
+.reports-table.user-table thead th:nth-child(4) { width: 15%; min-width: 100px; }  /* Status */
+.reports-table.user-table thead th:nth-child(5) { width: 15%; min-width: 80px; }  /* Time */
+.reports-table.user-table thead th:nth-child(6) { width: 18%; min-width: 120px; }  /* Date */
 
 .reports-table thead th:not(:last-child)::after {
   content: '';
@@ -168,29 +176,37 @@
 }
 
 .reports-table tbody td {
-  padding: 1.5rem;
+  padding: 1.25rem 1rem;
   color: var(--text-secondary);
   font-size: 0.95rem;
   vertical-align: middle;
+  text-align: center;
+}
+
+.reports-table.admin-table tbody td:nth-child(1),
+.reports-table.admin-table tbody td:nth-child(2),
+.reports-table.admin-table tbody td:nth-child(3),
+.reports-table.user-table tbody td:nth-child(1) {
+  text-align: left;
 }
 
 /* Ensure column widths match header for admin view */
-.reports-table.admin-table tbody td:nth-child(1) { width: 12%; }  /* User Name */
-.reports-table.admin-table tbody td:nth-child(2) { width: 20%; }  /* Email */
-.reports-table.admin-table tbody td:nth-child(3) { width: 18%; }  /* Test */
-.reports-table.admin-table tbody td:nth-child(4) { width: 10%; }  /* Score */
-.reports-table.admin-table tbody td:nth-child(5) { width: 12%; }  /* Percentage */
-.reports-table.admin-table tbody td:nth-child(6) { width: 10%; }  /* Status */
-.reports-table.admin-table tbody td:nth-child(7) { width: 10%; }  /* Time */
-.reports-table.admin-table tbody td:nth-child(8) { width: 8%; }   /* Date */
+.reports-table.admin-table tbody td:nth-child(1) { width: 15%; min-width: 120px; }  /* User Name */
+.reports-table.admin-table tbody td:nth-child(2) { width: 22%; min-width: 180px; }  /* Email */
+.reports-table.admin-table tbody td:nth-child(3) { width: 15%; min-width: 120px; }  /* Test */
+.reports-table.admin-table tbody td:nth-child(4) { width: 10%; min-width: 80px; text-align: center; }  /* Score */
+.reports-table.admin-table tbody td:nth-child(5) { width: 12%; min-width: 100px; text-align: center; }  /* Percentage */
+.reports-table.admin-table tbody td:nth-child(6) { width: 10%; min-width: 80px; text-align: center; }  /* Status */
+.reports-table.admin-table tbody td:nth-child(7) { width: 8%; min-width: 70px; text-align: center; }  /* Time */
+.reports-table.admin-table tbody td:nth-child(8) { width: 8%; min-width: 100px; text-align: center; }   /* Date */
 
 /* Ensure column widths match header for user view */
-.reports-table.user-table tbody td:nth-child(1) { width: 25%; }  /* Test */
-.reports-table.user-table tbody td:nth-child(2) { width: 12%; }  /* Score */
-.reports-table.user-table tbody td:nth-child(3) { width: 15%; }  /* Percentage */
-.reports-table.user-table tbody td:nth-child(4) { width: 15%; }  /* Status */
-.reports-table.user-table tbody td:nth-child(5) { width: 15%; }  /* Time */
-.reports-table.user-table tbody td:nth-child(6) { width: 18%; }  /* Date */
+.reports-table.user-table tbody td:nth-child(1) { width: 25%; min-width: 150px; }  /* Test */
+.reports-table.user-table tbody td:nth-child(2) { width: 12%; min-width: 80px; text-align: center; }  /* Score */
+.reports-table.user-table tbody td:nth-child(3) { width: 15%; min-width: 100px; text-align: center; }  /* Percentage */
+.reports-table.user-table tbody td:nth-child(4) { width: 15%; min-width: 100px; text-align: center; }  /* Status */
+.reports-table.user-table tbody td:nth-child(5) { width: 15%; min-width: 80px; text-align: center; }  /* Time */
+.reports-table.user-table tbody td:nth-child(6) { width: 18%; min-width: 120px; text-align: center; }  /* Date */
 
 .reports-table tbody td:first-child {
   font-weight: 600;
@@ -306,10 +322,11 @@
 @media (max-width: 1024px) {
   .reports-table-container {
     overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   .reports-table {
-    min-width: 900px;
+    min-width: 1000px;
   }
 }
 

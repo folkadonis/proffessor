@@ -24,7 +24,7 @@
   background: white;
   border-radius: var(--radius-xl);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
+  overflow-x: auto;
   animation: fadeInUp 0.8s ease;
   position: relative;
 }
@@ -44,6 +44,7 @@
   width: 100%;
   border-collapse: collapse;
   table-layout: fixed;
+  min-width: 900px;
 }
 
 .users-table thead {
@@ -56,8 +57,8 @@
 }
 
 .users-table thead th {
-  padding: 1.25rem 1.5rem;
-  text-align: left;
+  padding: 1.25rem 1rem;
+  text-align: center;
   font-size: 0.875rem;
   font-weight: 700;
   text-transform: uppercase;
@@ -65,13 +66,18 @@
   position: relative;
 }
 
+.users-table thead th:nth-child(1),
+.users-table thead th:nth-child(2) {
+  text-align: left;
+}
+
 /* Set column widths */
-.users-table thead th:nth-child(1) { width: 15%; }  /* Name */
-.users-table thead th:nth-child(2) { width: 25%; }  /* Email */
-.users-table thead th:nth-child(3) { width: 15%; }  /* Status */
-.users-table thead th:nth-child(4) { width: 15%; }  /* Approved */
-.users-table thead th:nth-child(5) { width: 15%; }  /* Joined */
-.users-table thead th:nth-child(6) { width: 15%; }  /* Actions */
+.users-table thead th:nth-child(1) { width: 15%; min-width: 120px; }  /* Name */
+.users-table thead th:nth-child(2) { width: 25%; min-width: 200px; }  /* Email */
+.users-table thead th:nth-child(3) { width: 12%; min-width: 100px; text-align: center; }  /* Status */
+.users-table thead th:nth-child(4) { width: 12%; min-width: 100px; text-align: center; }  /* Approved */
+.users-table thead th:nth-child(5) { width: 18%; min-width: 120px; text-align: center; }  /* Joined */
+.users-table thead th:nth-child(6) { width: 18%; min-width: 150px; text-align: center; }  /* Actions */
 
 .users-table thead th:not(:last-child)::after {
   content: '';
@@ -112,10 +118,16 @@
 }
 
 .users-table tbody td {
-  padding: 1.5rem;
+  padding: 1.25rem 1rem;
   color: var(--text-secondary);
   font-size: 0.95rem;
   vertical-align: middle;
+  text-align: center;
+}
+
+.users-table tbody td:nth-child(1),
+.users-table tbody td:nth-child(2) {
+  text-align: left;
 }
 
 .users-table tbody td:first-child {
@@ -124,12 +136,12 @@
 }
 
 /* Ensure column widths match header */
-.users-table tbody td:nth-child(1) { width: 15%; }  /* Name */
-.users-table tbody td:nth-child(2) { width: 25%; }  /* Email */
-.users-table tbody td:nth-child(3) { width: 15%; }  /* Status */
-.users-table tbody td:nth-child(4) { width: 15%; }  /* Approved */
-.users-table tbody td:nth-child(5) { width: 15%; }  /* Joined */
-.users-table tbody td:nth-child(6) { width: 15%; }  /* Actions */
+.users-table tbody td:nth-child(1) { width: 15%; min-width: 120px; }  /* Name */
+.users-table tbody td:nth-child(2) { width: 25%; min-width: 200px; }  /* Email */
+.users-table tbody td:nth-child(3) { width: 12%; min-width: 100px; text-align: center; }  /* Status */
+.users-table tbody td:nth-child(4) { width: 12%; min-width: 100px; text-align: center; }  /* Approved */
+.users-table tbody td:nth-child(5) { width: 18%; min-width: 120px; text-align: center; }  /* Joined */
+.users-table tbody td:nth-child(6) { width: 18%; min-width: 150px; text-align: center; }  /* Actions */
 
 /* Status Badges */
 .status-badge {
@@ -268,10 +280,11 @@
 @media (max-width: 1024px) {
   .users-table-container {
     overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   .users-table {
-    min-width: 800px;
+    min-width: 900px;
   }
 }
 
