@@ -103,7 +103,7 @@ const Reports: React.FC = () => {
       </div>
 
       <div className="reports-table-container">
-        <table className="reports-table">
+        <table className={`reports-table ${isAdmin() ? 'admin-table' : 'user-table'}`}>
           <thead>
             <tr>
               {isAdmin() && (

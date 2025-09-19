@@ -43,6 +43,7 @@
 .users-table {
   width: 100%;
   border-collapse: collapse;
+  table-layout: fixed;
 }
 
 .users-table thead {
@@ -63,6 +64,14 @@
   letter-spacing: 0.05em;
   position: relative;
 }
+
+/* Set column widths */
+.users-table thead th:nth-child(1) { width: 15%; }  /* Name */
+.users-table thead th:nth-child(2) { width: 25%; }  /* Email */
+.users-table thead th:nth-child(3) { width: 15%; }  /* Status */
+.users-table thead th:nth-child(4) { width: 15%; }  /* Approved */
+.users-table thead th:nth-child(5) { width: 15%; }  /* Joined */
+.users-table thead th:nth-child(6) { width: 15%; }  /* Actions */
 
 .users-table thead th:not(:last-child)::after {
   content: '';
@@ -106,12 +115,21 @@
   padding: 1.5rem;
   color: var(--text-secondary);
   font-size: 0.95rem;
+  vertical-align: middle;
 }
 
 .users-table tbody td:first-child {
   font-weight: 600;
   color: var(--text-primary);
 }
+
+/* Ensure column widths match header */
+.users-table tbody td:nth-child(1) { width: 15%; }  /* Name */
+.users-table tbody td:nth-child(2) { width: 25%; }  /* Email */
+.users-table tbody td:nth-child(3) { width: 15%; }  /* Status */
+.users-table tbody td:nth-child(4) { width: 15%; }  /* Approved */
+.users-table tbody td:nth-child(5) { width: 15%; }  /* Joined */
+.users-table tbody td:nth-child(6) { width: 15%; }  /* Actions */
 
 /* Status Badges */
 .status-badge {
