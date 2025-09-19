@@ -16,6 +16,7 @@ import TestResult from './pages/TestResult';
 import TestHistory from './pages/TestHistory';
 import UserManagement from './pages/UserManagement';
 import Reports from './pages/Reports';
+import './styles/globals.css';
 import './App.css';
 
 function App() {
