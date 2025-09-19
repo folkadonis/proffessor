@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import api from '../services/api';
+import './TakeTestPremium.css';
 
 interface Question {
   _id: string;
@@ -52,30 +53,27 @@ const TakeTest: React.FC = () => {
 
   useEffect(() => {
     fetchTestData();
-
     window.addEventListener('beforeunload', handleBeforeUnload);
     document.addEventListener('visibilitychange', handleVisibilityChange);
-    window.addEventListener('keydown', handleKeyDown);
-
-    document.addEventListener('contextmenu', (e) => e.preventDefault());
+    document.addEventListener('keydown', handleKeyDown);
 
     return () => {
       window.removeEventListener('beforeunload', handleBeforeUnload);
       document.removeEventListener('visibilitychange', handleVisibilityChange);
-      window.removeEventListener('keydown', handleKeyDown);
-      document.removeEventListener('contextmenu', (e) => e.preventDefault());
+      document.removeEventListener('keydown', handleKeyDown);
     };
   }, [attemptId, handleBeforeUnload, handleVisibilityChange, handleKeyDown]);
 
   useEffect(() => {
     if (test && startTime) {
       const timer = setInterval(() => {
-        const elapsed = Math.floor((Date.now() - startTime.getTime()) / 1000);
-        const remaining = Math.max(0, test.duration * 60 - elapsed);
+        const now = new Date();
+        const elapsed = Math.floor((now.getTime() - startTime.getTime()) / 1000);
+        const remaining = Math.max(test.duration * 60 - elapsed, 0);
         setTimeLeft(remaining);
 
         if (remaining === 0) {
-          handleSubmitTest();
+          handleSubmit();
         }
       }, 1000);
 
@@ -85,51 +83,60 @@ const TakeTest: React.FC = () => {
 
   const fetchTestData = async () => {
     try {
-      setLoading(true);
       const response = await api.get(`/test/attempt/${attemptId}`);
-      setTest(response.data.test);
-      setStartTime(new Date(response.data.startedAt));
+      const testData = response.data;
 
-      const savedAnswers: { [key: string]: number } = {};
-      response.data.test.questions.forEach((q: Question) => {
-        if (q.selectedOption !== null && q.selectedOption !== undefined) {
-          savedAnswers[q._id] = q.selectedOption;
-        }
-      });
+      setTest(testData.test);
+      setStartTime(new Date(testData.startTime));
+
+      const savedAnswers = testData.answers || {};
       setAnswers(savedAnswers);
-    } catch (error) {
-      console.error('Error fetching test:', error);
-      alert('Error loading test');
-      navigate('/tests');
-    } finally {
+
       setLoading(false);
+    } catch (error: any) {
+      console.error('Error fetching test:', error);
+      alert('Error loading test. Please try again.');
+      navigate('/tests');
     }
   };
 
-  const handleAnswerSelect = async (questionId: string, optionIndex: number) => {
-    setAnswers({ ...answers, [questionId]: optionIndex });
+  const handleOptionSelect = (questionId: string, optionIndex: number) => {
+    setAnswers(prev => ({
+      ...prev,
+      [questionId]: optionIndex
+    }));
+  };
 
+  const handleNext = () => {
+    if (currentQuestionIndex < test!.questions.length - 1) {
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+    }
+  };
+
+  const handlePrevious = () => {
+    if (currentQuestionIndex > 0) {
+      setCurrentQuestionIndex(currentQuestionIndex - 1);
+    }
+  };
+
+  const handleQuestionJump = (index: number) => {
+    setCurrentQuestionIndex(index);
+  };
+
+  const handleSubmit = async () => {
+    const confirmed = window.confirm('Are you sure you want to submit your test?');
+    if (!confirmed) return;
+
+    setSubmitting(true);
     try {
-      await api.post(`/test/answer/${attemptId}`, {
-        questionId,
-        selectedOption: optionIndex
+      const response = await api.post(`/test/submit/${attemptId}`, {
+        answers
       });
-    } catch (error) {
-      console.error('Error saving answer:', error);
-    }
-  };
 
-  const handleSubmitTest = async () => {
-    if (!window.confirm('Are you sure you want to submit the test?')) return;
-
-    try {
-      setSubmitting(true);
-      const response = await api.post(`/test/submit/${attemptId}`);
       navigate(`/result/${attemptId}`);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error submitting test:', error);
-      alert('Error submitting test');
-    } finally {
+      alert(error.response?.data?.error || 'Error submitting test');
       setSubmitting(false);
     }
   };
@@ -141,102 +148,105 @@ const TakeTest: React.FC = () => {
   };
 
   if (loading) {
-    return <div className="loading">Loading test...</div>;
+    return (
+      <div className="loading-container">
+        <div className="spinner"></div>
+        <p className="text-muted">Loading test...</p>
+      </div>
+    );
   }
 
   if (!test) {
-    return <div className="error">Test not found</div>;
+    return (
+      <div className="empty-state">
+        <h2>Test not found</h2>
+        <button onClick={() => navigate('/tests')} className="btn btn-primary">
+          Back to Tests
+        </button>
+      </div>
+    );
   }
 
   const currentQuestion = test.questions[currentQuestionIndex];
-  const answeredCount = Object.keys(answers).length;
+  const isAnswered = (questionId: string) => answers.hasOwnProperty(questionId);
 
   return (
     <div className="take-test-page">
-      <div className="test-header">
-        <h2>{test.title}</h2>
-        <div className="test-timer">
-          <span className={timeLeft < 300 ? 'warning' : ''}>
+      <div className="test-container">
+        <div className="test-header-info">
+          <div>
+            <h2>{test.title}</h2>
+            <p className="text-muted">Question {currentQuestionIndex + 1} of {test.questions.length}</p>
+          </div>
+          <div className={`test-timer ${timeLeft < 300 ? 'warning' : ''}`}>
             Time Left: {formatTime(timeLeft)}
-          </span>
+          </div>
         </div>
-      </div>
-
-      <div className="test-progress">
-        <div className="progress-info">
-          Question {currentQuestionIndex + 1} of {test.questions.length}
-        </div>
-        <div className="progress-bar">
-          <div
-            className="progress-fill"
-            style={{ width: `${((currentQuestionIndex + 1) / test.questions.length) * 100}%` }}
-          />
-        </div>
-      </div>
-
-      <div className="question-container">
-        <div className="question-text">
-          <h3>{currentQuestion.question}</h3>
-        </div>
-
-        <div className="options-container">
-          {currentQuestion.options.map((option, index) => (
-            <label key={index} className="option-label">
-              <input
-                type="radio"
-                name={`question-${currentQuestion._id}`}
-                checked={answers[currentQuestion._id] === index}
-                onChange={() => handleAnswerSelect(currentQuestion._id, index)}
-              />
-              <span className="option-text">{option.text}</span>
-            </label>
-          ))}
-        </div>
-      </div>
-
-      <div className="navigation-container">
-        <button
-          onClick={() => setCurrentQuestionIndex(currentQuestionIndex - 1)}
-          disabled={currentQuestionIndex === 0}
-          className="nav-btn"
-        >
-          Previous
-        </button>
 
         <div className="question-indicators">
           {test.questions.map((q, index) => (
             <button
               key={q._id}
-              onClick={() => setCurrentQuestionIndex(index)}
-              className={`indicator ${index === currentQuestionIndex ? 'current' : ''} ${
-                answers[q._id] !== undefined ? 'answered' : ''
-              }`}
+              onClick={() => handleQuestionJump(index)}
+              className={`indicator-btn ${
+                index === currentQuestionIndex ? 'current' : ''
+              } ${isAnswered(q._id) ? 'answered' : ''}`}
             >
               {index + 1}
             </button>
           ))}
         </div>
 
-        <button
-          onClick={() => setCurrentQuestionIndex(currentQuestionIndex + 1)}
-          disabled={currentQuestionIndex === test.questions.length - 1}
-          className="nav-btn"
-        >
-          Next
-        </button>
-      </div>
+        <div className="question-content">
+          <h3 className="question-text">{currentQuestion.question}</h3>
 
-      <div className="test-footer">
-        <div className="answered-info">
-          Answered: {answeredCount} / {test.questions.length}
+          <div className="options-list">
+            {currentQuestion.options.map((option, index) => (
+              <div key={index} className="option-item">
+                <label className="option-label">
+                  <input
+                    type="radio"
+                    name={`question-${currentQuestion._id}`}
+                    checked={answers[currentQuestion._id] === index}
+                    onChange={() => handleOptionSelect(currentQuestion._id, index)}
+                  />
+                  <span>{option.text}</span>
+                </label>
+              </div>
+            ))}
+          </div>
         </div>
-        <button
-          onClick={handleSubmitTest}
-          className="submit-test-btn"
-          disabled={submitting}
-        >
-          {submitting ? 'Submitting...' : 'Submit Test'}
-        </button>
+
+        <div className="question-navigation">
+          <button
+            onClick={handlePrevious}
+            disabled={currentQuestionIndex === 0}
+            className="btn btn-secondary"
+          >
+            Previous
+          </button>
+
+          <div className="question-progress">
+            {Object.keys(answers).length} of {test.questions.length} answered
+          </div>
+
+          {currentQuestionIndex === test.questions.length - 1 ? (
+            <button
+              onClick={handleSubmit}
+              disabled={submitting}
+              className="btn btn-danger"
+            >
+              {submitting ? 'Submitting...' : 'Submit Test'}
+            </button>
+          ) : (
+            <button
+              onClick={handleNext}
+              className="btn btn-primary"
+            >
+              Next
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );
