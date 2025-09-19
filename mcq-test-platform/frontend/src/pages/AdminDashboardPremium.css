@@ -1,7 +1,7 @@
-/* Premium Admin Dashboard Styles - Dark Theme */
+/* Premium Admin Dashboard Styles */
 .admin-dashboard {
   min-height: 100vh;
-  background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   padding: 2rem 1rem;
   position: relative;
 }
@@ -14,8 +14,8 @@
   right: 0;
   bottom: 0;
   background-image:
-    radial-gradient(circle at 30% 30%, rgba(139, 92, 246, 0.1) 0%, transparent 60%),
-    radial-gradient(circle at 70% 70%, rgba(139, 92, 246, 0.05) 0%, transparent 60%);
+    radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 60%),
+    radial-gradient(circle at 70% 70%, rgba(255, 255, 255, 0.05) 0%, transparent 60%);
   pointer-events: none;
 }
 
@@ -23,16 +23,19 @@
   text-align: center;
   font-size: 3rem;
   font-weight: 800;
-  background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin-bottom: 3rem;
-  text-shadow: 0 2px 20px rgba(255, 255, 255, 0.1);
+  color: #1a1a1a;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.9) 100%);
+  display: inline-block;
+  padding: 1rem 3rem;
+  border-radius: var(--radius-xl);
+  margin: 0 auto 3rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   animation: fadeInDown 0.8s ease;
   position: relative;
   z-index: 1;
   letter-spacing: -0.02em;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 /* Stats Grid Premium */
@@ -48,10 +51,9 @@
 }
 
 .stat-card {
-  background: rgba(30, 30, 30, 0.95);
+  background: rgba(255, 255, 255, 0.98);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(139, 92, 246, 0.2);
   border-radius: var(--radius-xl);
   padding: 2rem;
   text-align: center;
@@ -59,8 +61,8 @@
   overflow: hidden;
   transition: var(--transition-spring);
   box-shadow:
-    0 20px 40px rgba(0, 0, 0, 0.5),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    0 20px 40px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
 }
 
 .stat-card::before {
@@ -74,7 +76,6 @@
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.3s ease;
-  box-shadow: 0 2px 10px rgba(139, 92, 246, 0.5);
 }
 
 .stat-card:hover::before {
@@ -84,31 +85,29 @@
 .stat-card:hover {
   transform: translateY(-8px) scale(1.02);
   box-shadow:
-    0 30px 60px rgba(0, 0, 0, 0.7),
-    0 0 40px rgba(139, 92, 246, 0.3);
-  border-color: rgba(139, 92, 246, 0.5);
+    0 30px 60px rgba(0, 0, 0, 0.2),
+    0 0 40px rgba(139, 92, 246, 0.1);
 }
 
 .stat-card h3 {
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: #a0a0a0;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
   margin-bottom: 1rem;
 }
 
 .stat-number {
   font-size: 3.5rem;
   font-weight: 800;
-  background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
+  background: var(--primary-gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   margin: 1rem 0;
   line-height: 1;
   animation: countUp 1s ease;
-  text-shadow: 0 2px 10px rgba(255, 255, 255, 0.2);
 }
 
 @keyframes countUp {
@@ -133,7 +132,6 @@
   font-weight: 600;
   cursor: pointer;
   transition: var(--transition-spring);
-  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
 }
 
 .view-btn:hover {
@@ -145,15 +143,14 @@
 .admin-actions {
   max-width: 1200px;
   margin: 0 auto;
-  background: rgba(30, 30, 30, 0.95);
+  background: rgba(255, 255, 255, 0.98);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(139, 92, 246, 0.2);
   border-radius: var(--radius-xl);
   padding: 3rem;
   box-shadow:
-    0 30px 60px rgba(0, 0, 0, 0.5),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    0 30px 60px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
   position: relative;
   z-index: 1;
   animation: slideUp 1s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -162,7 +159,7 @@
 .admin-actions h2 {
   font-size: 2rem;
   font-weight: 700;
-  background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%);
+  background: var(--primary-gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -179,17 +176,17 @@
 
 .action-btn {
   padding: 2rem 1.5rem;
-  background: rgba(40, 40, 40, 0.95);
-  border: 2px solid transparent;
+  background: white;
+  border: 3px solid transparent;
   background-image:
-    linear-gradient(rgba(40, 40, 40, 0.95), rgba(40, 40, 40, 0.95)),
+    linear-gradient(white, white),
     var(--primary-gradient);
   background-origin: border-box;
   background-clip: padding-box, border-box;
   border-radius: var(--radius-xl);
   font-size: 1.1rem;
   font-weight: 700;
-  color: #ffffff;
+  color: var(--text-primary);
   cursor: pointer;
   transition: var(--transition-spring);
   position: relative;
@@ -205,7 +202,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, rgba(139, 92, 246, 0.3) 0%, rgba(236, 72, 153, 0.3) 100%);
+  background: var(--primary-gradient);
   opacity: 0;
   transition: opacity 0.3s ease;
   z-index: -1;
@@ -228,8 +225,7 @@
 .action-btn:hover {
   color: white;
   transform: translateY(-5px) scale(1.02);
-  box-shadow: 0 20px 40px rgba(139, 92, 246, 0.5);
-  border-color: rgba(139, 92, 246, 0.5);
+  box-shadow: 0 20px 40px rgba(139, 92, 246, 0.3);
 }
 
 .action-btn:hover::before {
