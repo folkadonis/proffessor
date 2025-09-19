@@ -64,6 +64,13 @@ const Navbar: React.FC = () => {
               </button>
 
               <div className={`navbar-menu ${mobileMenuOpen ? 'active' : ''}`}>
+                <button
+                  className="mobile-menu-close"
+                  onClick={() => setMobileMenuOpen(false)}
+                  aria-label="Close menu"
+                >
+                  ✕
+                </button>
                 <div className="navbar-links">
                   {isAdmin() ? (
                     <>
