@@ -49,6 +49,42 @@ router.delete('/reject-user/:userId', adminAuth, async (req, res) => {
   }
 });
 
+router.put('/toggle-user-status/:userId', adminAuth, async (req, res) => {
+  try {
+    const user = await User.findById(req.params.userId);
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    user.isActive = !user.isActive;
+    await user.save();
+
+    res.json({
+      message: `User ${user.isActive ? 'activated' : 'deactivated'} successfully`,
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        isActive: user.isActive
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+router.get('/all-users', adminAuth, async (req, res) => {
+  try {
+    const users = await User.find({ role: 'user' })
+      .select('-password')
+      .sort('-createdAt');
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
 router.post('/questions', adminAuth, async (req, res) => {
   try {
     const { question, options, explanation, difficulty, category } = req.body;

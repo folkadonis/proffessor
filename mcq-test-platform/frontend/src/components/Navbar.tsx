@@ -43,13 +43,16 @@ const Navbar: React.FC = () => {
                 <>
                   <Link to="/admin" onClick={closeMobileMenu}>Dashboard</Link>
                   <Link to="/admin/questions" onClick={closeMobileMenu}>Questions</Link>
-                  <Link to="/admin/test-modules" onClick={closeMobileMenu}>Test Modules</Link>
-                  <Link to="/admin/pending-users" onClick={closeMobileMenu}>Pending Users</Link>
+                  <Link to="/admin/test-modules" onClick={closeMobileMenu}>Tests</Link>
+                  <Link to="/admin/users" onClick={closeMobileMenu}>Users</Link>
+                  <Link to="/admin/pending-users" onClick={closeMobileMenu}>Pending</Link>
+                  <Link to="/admin/reports" onClick={closeMobileMenu}>Reports</Link>
                 </>
               ) : (
                 <>
                   <Link to="/tests" onClick={closeMobileMenu}>Available Tests</Link>
                   <Link to="/history" onClick={closeMobileMenu}>My History</Link>
+                  <Link to="/reports" onClick={closeMobileMenu}>My Reports</Link>
                 </>
               )}
 

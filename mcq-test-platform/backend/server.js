@@ -25,11 +25,13 @@ const authRoutes = require('./routes/auth');
 const adminRoutes = require('./routes/admin');
 const testRoutes = require('./routes/test');
 const userRoutes = require('./routes/user');
+const reportRoutes = require('./routes/reports');
 
 app.use('/api/auth', authRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/test', testRoutes);
 app.use('/api/user', userRoutes);
+app.use('/api/reports', reportRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

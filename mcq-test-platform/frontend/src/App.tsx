@@ -14,6 +14,8 @@ import TestList from './pages/TestList';
 import TakeTest from './pages/TakeTest';
 import TestResult from './pages/TestResult';
 import TestHistory from './pages/TestHistory';
+import UserManagement from './pages/UserManagement';
+import Reports from './pages/Reports';
 import './App.css';
 
 function App() {
@@ -54,6 +56,24 @@ function App() {
               <Route path="/admin/pending-users" element={
                 <ProtectedRoute adminOnly>
                   <PendingUsers />
+                </ProtectedRoute>
+              } />
+
+              <Route path="/admin/users" element={
+                <ProtectedRoute adminOnly>
+                  <UserManagement />
+                </ProtectedRoute>
+              } />
+
+              <Route path="/admin/reports" element={
+                <ProtectedRoute adminOnly>
+                  <Reports />
+                </ProtectedRoute>
+              } />
+
+              <Route path="/reports" element={
+                <ProtectedRoute>
+                  <Reports />
                 </ProtectedRoute>
               } />
 
